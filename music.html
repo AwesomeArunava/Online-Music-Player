@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome Arunava Music Player</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">TAKI TAKI</h2>
+            <h3 id="artist">Dj Snake</h3>
+            <div class="image_container">
+                <img src="images/music-1.jpg" alt="">
+            </div>
+            <div>
+                <audio src="music/music-1.mp3"></audio>
+
+                <!--------controls------------>
+                <div class="music_controls" >
+                    <i class="fas fa-backward" id="prev" title="Previous"></i>
+                    <i class="fas fa-play main-button" id="play" title="Play"></i>
+                    <i class="fas fa-forward" id="next" title="Next"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const music = document.querySelector("audio");
+        const img = document.querySelector("img");
+        const play = document.getElementById("play");
+        const artist = document.getElementById("artist");
+        const title = document.getElementById("title");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+
+
+        const songs = [{
+            name:"music-1",
+            title:"Taki Taki",
+            artist:"Dj Snake",
+        },
+        {
+            name:"music-2",
+            title:"Backbone",
+            artist:"Hardy Sandhu",
+        },
+        {
+            name:"music-3",
+            title:"Bilionera",
+            artist:"Emanuela Oancea",
+        },
+        {
+            name:"music-4",
+            title:"Manike X Tomar Ghore",
+            artist:"Yohani X Anirban",
+        },
+        {
+            name:"music-5",
+            title:"Rata Lambiya",
+            artist:"Jubin Nautiyal",
+        },
+        {
+            name:"music-6",
+            title:"Let Me Down x Main Dhoondne",
+            artist:"Gravero Mashup",
+        },
+        {
+            name:"music-7",
+            title:"Arcade x Mann Mera",
+            artist:"Gravero Mashup",
+        }]
+        
+        isPlaying = false;
+
+        const playMusic = ()=> {
+            music.play();
+            isPlaying = true;
+            play.classList.replace('fa-play', 'fa-pause');
+            img.classList.add("anime");
+        };
+        //for pause function
+        const pauseMusic = ()=> {
+            music.pause();
+            isPlaying = false;
+            play.classList.replace('fa-pause', 'fa-play');
+            img.classList.remove("anime");
+        };
+
+        play.addEventListener('click', ()=> {
+            //if(isPlaying){
+            //  pauseMusic();
+            //}
+            //else{
+              //  playMusic();
+            //}
+
+            isPlaying ? pauseMusic() : playMusic();
+        });
+
+
+        //changing song
+
+        const loadSong = (songs) =>{
+            title.textContent = songs.title;
+            artist.textContent = songs.artist;
+            music.src= "music/"+songs.name+".mp3";
+            img.src = "images/"+songs.name+".jpg";
+        }
+
+        songsIndex= 0;
+        //loadSong(songs[1]);
+
+        const nextSong= ()=>{
+            songsIndex= (songsIndex+1)%songs.length;
+            loadSong(songs[songsIndex]);
+            playMusic();
+        };
+
+        const prevSong=()=>{
+            songsIndex=(songsIndex-1 + songs.length)% songs.length;
+            loadSong(songs[songsIndex]);
+            playMusic();
+        };
+        next.addEventListener('click', nextSong);
+        prev.addEventListener('click', prevSong);
+
+
+    </script>
+</body>
+</html>
